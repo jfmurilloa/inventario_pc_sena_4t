@@ -122,6 +122,17 @@ class VentanaPrincipal:
         else:
             messagebox.showwarning('Error','Todos los campos son obligatorios...')
     
+    def buscar_cuentadante_v(self):
+        if self.caja2.get() != '':
+            find_cuentadante= obj_dao.buscar_cuentadante(self.caja2.get())
+            if find_cuentadante != None:
+                obj_cue=Cuentadante(find_cuentadante[1],find_cuentadante[2],find_cuentadante[3],find_cuentadante[4],find_cuentadante[5],find_cuentadante[0])
+            else:
+                messagebox.showwarning('No encontrado','registro no encontrado...')
+        else:
+            messagebox.showwarning('No encontrado','debe ingresar un numero de cedula para la busqueda...')
+            self.txt_caja2.focus()
+    
     def limpiar(self):
         self.caja1.set('')
         self.caja2.set('')
@@ -133,6 +144,7 @@ class VentanaPrincipal:
     
     def buscar_cuentadante_v(self):
         if self.caja2.get() != '':
+            pass
             
 
 
