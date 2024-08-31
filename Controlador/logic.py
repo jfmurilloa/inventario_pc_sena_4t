@@ -59,7 +59,7 @@ class Dao:
         try:
             self.db.cursor.execute(insert,val)
             self.db.connection.commit()
-            messagebox.showinfo('Nuevo registro','El cuentadante ha sido almacenado!!!')
+            messagebox.showinfo('Nuevo registro','La ubicación ha sido almacenada!!!')
         except mysql.connector.Error as e:
             messagebox.showerror('Error',e)
     
