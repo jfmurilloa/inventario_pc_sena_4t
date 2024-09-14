@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-08-2024 a las 01:31:09
+-- Tiempo de generación: 31-08-2024 a las 02:21:40
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -41,8 +41,26 @@ CREATE TABLE `cuentadante` (
 --
 
 INSERT INTO `cuentadante` (`id`, `documento`, `nombres`, `apellidos`, `correo`, `celular`) VALUES
-(1, '147852', 'Marcela', 'Mejia', 'marcela@gmail.com', '3156974'),
 (2, '789632145', 'Antonio', 'Perea', 'antonio@sena.educ.o', '32261');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ubicacion`
+--
+
+CREATE TABLE `ubicacion` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(20) NOT NULL,
+  `descripcion` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ubicacion`
+--
+
+INSERT INTO `ubicacion` (`id`, `nombre`, `descripcion`) VALUES
+(1, 'Control electronico', 'bloque 1 piso2');
 
 --
 -- Índices para tablas volcadas
@@ -56,6 +74,13 @@ ALTER TABLE `cuentadante`
   ADD UNIQUE KEY `documento` (`documento`);
 
 --
+-- Indices de la tabla `ubicacion`
+--
+ALTER TABLE `ubicacion`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nombre` (`nombre`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -63,6 +88,12 @@ ALTER TABLE `cuentadante`
 -- AUTO_INCREMENT de la tabla `cuentadante`
 --
 ALTER TABLE `cuentadante`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `ubicacion`
+--
+ALTER TABLE `ubicacion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
