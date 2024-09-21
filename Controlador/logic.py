@@ -31,6 +31,17 @@ class Dao:
             messagebox.showerror('Error',e)
             return None
     
+    def buscar_cuentadante_2(self,id):
+        criterio=(id,)
+        select='select * from cuentadante where id= %s'
+        try:
+            self.db.cursor.execute(select,criterio)
+            obj_cue= self.db.cursor.fetchone()
+            return obj_cue
+        except mysql.connector.Error as e:
+            messagebox.showerror('Error',e)
+            return None
+    
     def buscar_cuentadante_1(self,nom,ape):
         val=(nom,ape)
         select='select * from cuentadante where nombres= %s and apellidos=%s'
@@ -88,6 +99,17 @@ class Dao:
             messagebox.showerror('Error',e)
             return None
     
+    def buscar_ubicacion_1(self,id):
+        criterio=(id,)
+        select='select * from ubicacion where id= %s'
+        try:
+            self.db.cursor.execute(select,criterio)
+            obj_ubi= self.db.cursor.fetchone()
+            return obj_ubi
+        except mysql.connector.Error as e:
+            messagebox.showerror('Error',e)
+            return None
+    
     def modificar_ubicacion(self,obj:Ubicacion):
         val=(obj.nombre,obj.descripcion,obj.id)
         update= 'update ubicacion set nombre=%s, descripcion=%s where id=%s'
@@ -126,6 +148,17 @@ class Dao:
     def buscar_proveedor(self,nit):
         criterio=(nit,)
         select='select * from proveedor where nit= %s'
+        try:
+            self.db.cursor.execute(select,criterio)
+            obj_pro= self.db.cursor.fetchone()
+            return obj_pro
+        except mysql.connector.Error as e:
+            messagebox.showerror('Error',e)
+            return None
+    
+    def buscar_proveedor_2(self,id):
+        criterio=(id,)
+        select='select * from proveedor where id= %s'
         try:
             self.db.cursor.execute(select,criterio)
             obj_pro= self.db.cursor.fetchone()
@@ -213,7 +246,39 @@ class Dao:
             messagebox.showinfo('Nuevo Registro','El equipo ha sido almacenado...')
         except mysql.connector.Error as e:
             messagebox.showerror('Error',e)
-
+    
+    def modificar_equipo(self, obj:Equipo):
+        param=obj.id_cuentadante.split('_')
+        cue=self.buscar_cuentadante_1(param[0],param[1])
+        ubi=self.buscar_ubicacion(obj.id_ubicacion)
+        pro=self.buscar_proveedor_1(obj.id_proveedor)
+        val=(obj.serial,obj.marca,obj.fecha_compra,obj.vencimiento_garantia,obj.tipo,obj.clasificacion,cue[0],ubi[0],pro[0],obj.id)
+        insert='update equipo set serial=%s ,marca=%s,fecha_compra=%s,vencimiento_garantia=%s,tipo=%s,clasificacion=%s,cuentadante_id=%s,ubicacion_id=%s,proveedor_id=%s where id= %s'
+        try:
+            self.db.cursor.execute(insert,val)
+            self.db.connection.commit()
+            messagebox.showinfo('Actualizar','El equipo ha sido modificado...')
+        except mysql.connector.Error as e:
+            messagebox.showerror('Error',e)
+    
+    def buscar_equipo(self,ser):
+        criterio=(ser,)
+        select='select * from equipo where serial= %s'
+        try:
+            self.db.cursor.execute(select,criterio)
+            obj_equ= self.db.cursor.fetchone()
+            if obj_equ != None:
+                cue=self.buscar_cuentadante_2(obj_equ[7])            
+                ubi=self.buscar_ubicacion_1(obj_equ[8])
+                pro=self.buscar_proveedor_2(obj_equ[9])
+                obj_equipo=Equipo(obj_equ[1],obj_equ[2],obj_equ[3],obj_equ[4],obj_equ[5],obj_equ[6],cue[2]+'_'+cue[3],ubi[1],pro[2],obj_equ[0])
+            
+                return obj_equipo
+        except mysql.connector.Error as e:
+            messagebox.showerror('Error',e)
+            return None
+    
+    
 
 
 

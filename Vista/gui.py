@@ -498,10 +498,10 @@ class VentanaPrincipal:
         self.btn_nuevo= Button(frame2,width=10,font=('Arial',12,'bold'),text='Nuevo',bg='orange',bd=5,command=self.crear_equipo_v)
         self.btn_nuevo.grid(row=0,column=0,padx=10,pady=10)
 
-        self.btn_buscar= Button(frame2,width=10,font=('Arial',12,'bold'),text='Buscar',bg='orange',bd=5,command=self.buscar_proveedor_v)
+        self.btn_buscar= Button(frame2,width=10,font=('Arial',12,'bold'),text='Buscar',bg='orange',bd=5,command=self.buscar_equipo_v)
         self.btn_buscar.grid(row=0,column=1,padx=10,pady=10)
 
-        self.btn_modificar= Button(frame2,width=10,font=('Arial',12,'bold'),text='Modificar',bg='orange',bd=5,command=self.modificar_proveedor_v)
+        self.btn_modificar= Button(frame2,width=10,font=('Arial',12,'bold'),text='Modificar',bg='orange',bd=5,command=self.modificar_equipo_v)
         self.btn_modificar.grid(row=0,column=2,padx=10,pady=10)
 
         self.btn_eliminar= Button(frame2,width=10,font=('Arial',12,'bold'),text='Eliminar',bg='orange',bd=5,command=self.eliminar_proveedor_v)
@@ -517,6 +517,33 @@ class VentanaPrincipal:
             self.limpiar()
         else:
             messagebox.showerror('Error','Todos los campos son obligatorios')
+    
+    def modificar_equipo_v(self):
+        if(self.caja1.get() and self.caja2.get() and self.caja3.get() and self.caja4.get() and self.caja5.get() and self.caja7.get() and self.caja8.get() and self.caja9.get() and self.caja10.get() and self.caja11.get() !=''):
+            obj_equipo=Equipo(self.caja2.get(),self.caja3.get(),self.caja4.get(),self.caja5.get(),self.caja7.get(),self.caja8.get(),self.caja9.get(),self.caja10.get(),self.caja11.get(),self.caja1.get())
+            obj_dao.modificar_equipo(obj_equipo)
+            self.limpiar()
+        else:
+            messagebox.showerror('Error','Todos los campos son obligatorios')
+    
+    def buscar_equipo_v(self):
+        if self.caja2.get() != '':
+            equipo= obj_dao.buscar_equipo(self.caja2.get())
+            if equipo != None:                
+                self.caja1.set(equipo.id)
+                self.caja2.set(equipo.serial)
+                self.caja3.set(equipo.marca)
+                self.caja4.set(equipo.fecha_compra)
+                self.caja5.set(equipo.vencimiento_garantia)
+                self.caja7.set(equipo.tipo)
+                self.caja8.set(equipo.clasificacion)
+                self.caja9.set(equipo.id_cuentadante)
+                self.caja10.set(equipo.id_ubicacion)
+                self.caja11.set(equipo.id_proveedor)
+            else:
+                messagebox.showwarning('No encontrado','Registro no encontrado...')
+        else:
+            messagebox.showwarning('No encontrado','debe enviar un criterio de busqueda...')
     
    
             
